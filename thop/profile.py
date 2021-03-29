@@ -168,7 +168,9 @@ def profile(model: nn.Module, inputs, custom_ops=None, verbose=True):
         fn = None
         if m_type in custom_ops:  # if defined both op maps, use custom_ops to overwrite.
             fn = custom_ops[m_type]
-            if m_type not in types_collection and verbose:
+            if fn is None:
+                print("[WARNING] {} is cal as zero".format(m_type))
+            elif m_type not in types_collection and verbose:
                 print("[INFO] Customize rule %s() %s." % (fn.__qualname__, m_type))
         elif m_type in register_hooks:
             fn = register_hooks[m_type]
